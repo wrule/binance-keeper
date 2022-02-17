@@ -10,12 +10,6 @@ def message_handler(data):
 my_client = Client('wss://testnet.binance.vision')
 my_client.start()
 
-# my_client.mini_ticker(
-#     symbol="btcusdt",
-#     id=2,
-#     callback=message_handler,
-# )
-
 my_client.kline(
   symbol = 'btcusdt',
   id = 1,
