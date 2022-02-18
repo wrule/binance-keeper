@@ -35,6 +35,11 @@ class KLineWatcher:
     if  self.wsK.time == lastK.time:
       print('ws更新')
       self.KLines[lastIndex] = self.wsK
+      count = 0
+      for k in self.KLines:
+        if k.closed:
+          count += 1
+      print(count)
     elif self.wsK.time > lastK.time:
       print('ws超过')
       self.updateKLines()
