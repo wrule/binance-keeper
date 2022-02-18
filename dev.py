@@ -1,32 +1,39 @@
 #!/opt/homebrew/bin/python3
-
 import time
-from binance.websocket.spot.websocket_client import SpotWebsocketClient as WSClient
-from binance.spot import Spot as Client
-from datetime import datetime
+from src.spot.kline.watcher import KLineWatcher
 
-class K:
-  def __init__(self, data):
-    self.time = data[0] / 1e3
-    self.open = float(data[1])
-    self.high = float(data[2])
-    self.low = float(data[3])
-    self.close = float(data[4])
-    self.volume = float(data[5])
-  time = 0
-  open = 0
-  close = 0
-  high = 0
-  low = 0
-  volume = 0
+watcher = KLineWatcher('BTCUSDT', '1d', 10)
+watcher.Start()
+time.sleep(20)
+watcher.Stop()
+
+# import time
+# from binance.websocket.spot.websocket_client import SpotWebsocketClient as WSClient
+# from binance.spot import Spot as Client
+# from datetime import datetime
+
+# class K:
+#   def __init__(self, data):
+#     self.time = data[0] / 1e3
+#     self.open = float(data[1])
+#     self.high = float(data[2])
+#     self.low = float(data[3])
+#     self.close = float(data[4])
+#     self.volume = float(data[5])
+#   time = 0
+#   open = 0
+#   close = 0
+#   high = 0
+#   low = 0
+#   volume = 0
 
 
-spot_client = Client('https://testnet.binance.vision')
-klines = spot_client.klines('BTCUSDT', '1d', limit = 10)
-for row in klines:
-  k = K(row)
-  print(datetime.fromtimestamp(k.time), k.close)
-print(len(klines))
+# spot_client = Client('https://testnet.binance.vision')
+# klines = spot_client.klines('BTCUSDT', '1d', limit = 10)
+# for row in klines:
+#   k = K(row)
+#   print(datetime.fromtimestamp(k.time), k.close)
+# print(len(klines))
 
 
 # def message_handler(data):
