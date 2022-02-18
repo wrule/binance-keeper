@@ -23,9 +23,8 @@ class KLineWatcher:
   
   def wsData(self, data):
     if 'e' in data.keys():
-      print(data['k']['c'], data['k']['x'])
-      # k = CreateByWS(data['k'])
-      # print(k.high)
+      k = CreateByWS(data['k'])
+      print(k.close, k.closed)
 
   def Start(self):
     print('开始监听')

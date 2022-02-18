@@ -9,6 +9,7 @@ class K:
     high: float,
     low: float,
     volume: float,
+    closed: bool,
   ):
     self.time = time,
     self.open = open
@@ -16,12 +17,14 @@ class K:
     self.high = high
     self.low = low
     self.volume = volume
+    self.closed = closed
   time: int
   open: float
   close: float
   high: float
   low: float
   volume: float
+  closed: bool
 
 def Create(list: List[Any]):
   return K(
@@ -31,6 +34,7 @@ def Create(list: List[Any]):
     float(list[2]),
     float(list[3]),
     float(list[5]),
+    True,
   )
   
 def CreateByWS(data: Dict[str, Any]):
@@ -41,4 +45,5 @@ def CreateByWS(data: Dict[str, Any]):
     float(data['h']),
     float(data['l']),
     float(data['v']),
+    data['x'],
   )
