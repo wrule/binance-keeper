@@ -1,6 +1,6 @@
 from binance.spot import Spot as SpotClient
 from binance.websocket.spot.websocket_client import SpotWebsocketClient
-from src.k import CreateByWS
+from src.k import CreateByWS, Create
 
 class KLineWatcher:
   def __init__(
@@ -23,12 +23,15 @@ class KLineWatcher:
   
   def wsData(self, data):
     if 'e' in data.keys():
-      k = CreateByWS(data['k'])
-      print(k.high)
+      print(data['k']['c'], data['k']['x'])
+      # k = CreateByWS(data['k'])
+      # print(k.high)
 
   def Start(self):
     print('开始监听')
     klines = self.client.klines(self.symbol, self.interval, limit = self.limit)
+    # k = Create(klines[len(klines) - 2])
+    # print(klines)
     self.wsClient.start()
     self.wsClient.kline(
       symbol = self.symbol,

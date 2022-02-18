@@ -2,9 +2,9 @@
 import time
 from src.spot.kline.watcher import KLineWatcher
 
-watcher = KLineWatcher('BTCUSDT', '1d', 10)
+watcher = KLineWatcher('BTCUSDT', '1m', 3)
 watcher.Start()
-time.sleep(20)
+time.sleep(200)
 watcher.Stop()
 
 # import time
