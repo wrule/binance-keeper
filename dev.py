@@ -4,7 +4,7 @@ from src.spot.kline.watcher import KLineWatcher
 
 watcher = KLineWatcher('BTCUSDT', '1m', 3)
 watcher.Start()
-time.sleep(200)
+time.sleep(20)
 watcher.Stop()
 
 # import time

@@ -36,6 +36,12 @@ def Create(list: List[Any]):
     float(list[5]),
     True,
   )
+
+def CreateKLines(list: List[List[Any]]):
+  result = [Create(item) for item in list]
+  if len(result) > 0:
+    result[len(result) - 1].closed = False
+  return result
   
 def CreateByWS(data: Dict[str, Any]):
   return K(
