@@ -26,15 +26,19 @@ class KLineWatcher:
   wsK: K = None
   
   def doSomething(self):
-    times = [item.time for item in self.KLines]
-    index = times.index(self.wsK.time) if self.wsK.time in times else -1
-    if index < 0:
-      self.KLines.append(self.wsK)
-      print('不存在')
-    else:
-      self.KLines[index] = self.wsK
-      print('存在')
-    
+    if self.KLines is None or len(self.KLines) < 1:
+      return
+    if self.wsK is None:
+      return
+    lastIndex = len(self.KLines) - 1
+    lastK = self.KLines[lastIndex]
+    if  self.wsK.time == lastK.time:
+      print('ws更新')
+      self.KLines[lastIndex] = self.wsK
+    elif self.wsK.time > lastK.time:
+      print('ws超过')
+      self.updateKLines()
+
   
   def wsData(self, data):
     if 'e' in data.keys():
