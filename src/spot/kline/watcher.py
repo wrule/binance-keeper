@@ -25,13 +25,17 @@ class KLineWatcher:
   KLines: List[K] = None
   wsK: K = None
   
+  def doSomething(self):
+    print(self.wsK.close)
+  
   def wsData(self, data):
     if 'e' in data.keys():
-      newK = CreateByWS(data['k'])
-      if not self.wsK is None:
-        if self.wsK.time != newK.time:
+      oldK = self.wsK
+      self.wsK = CreateByWS(data['k'])
+      self.doSomething()
+      if not oldK is None:
+        if oldK.time != self.wsK.time:
           self.updateKLines()
-      self.wsK = newK
 
   def updateKLines(self):
     self.KLines = CreateKLines(self.client.klines(self.symbol, self.interval, limit = self.limit))
