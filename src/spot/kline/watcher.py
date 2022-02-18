@@ -22,23 +22,30 @@ class KLineWatcher:
   client: SpotClient
   wsClient: SpotWebsocketClient
   
-  KLines: List[K]
-  wsK: K
+  KLines: List[K] = None
+  wsK: K = None
   
   def wsData(self, data):
     if 'e' in data.keys():
-      self.K = CreateByWS(data['k'])
+      newK = CreateByWS(data['k'])
+      if not self.wsK is None:
+        if self.wsK.time != newK.time:
+          self.updateKLines()
+      self.wsK = newK
+
+  def updateKLines(self):
+    self.KLines = CreateKLines(self.client.klines(self.symbol, self.interval, limit = self.limit))
 
   def Start(self):
     print('开始监听')
-    self.KLines = CreateKLines(self.client.klines(self.symbol, self.interval, limit = self.limit))
-    self.wsClient.start()
+    self.updateKLines()
     self.wsClient.kline(
       symbol = self.symbol,
       id = 1,
       interval = self.interval,
       callback = self.wsData,
     )
+    self.wsClient.start()
 
   def Stop(self):
     print('结束监听')

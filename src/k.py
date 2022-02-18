@@ -11,7 +11,7 @@ class K:
     volume: float,
     closed: bool,
   ):
-    self.time = time,
+    self.time = time
     self.open = open
     self.close = close
     self.high = high
