@@ -62,6 +62,7 @@ class KLineWatcher:
   def Start(self):
     print('开始监听')
     self.updateKLines()
+    print('更新完成')
     self.wsClient.kline(
       symbol = self.symbol,
       id = 1,
