@@ -26,7 +26,6 @@ class KLineWatcher:
   wsKLine: K = None
   
   def tryToAction(self):
-    print('尝试行动')
     KLinesLen = len(self.KLines)
     if self.KLines is None or KLinesLen < 1:
       return
