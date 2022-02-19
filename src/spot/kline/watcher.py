@@ -25,6 +25,9 @@ class KLineWatcher:
   KLines: List[K] = None
   wsKLine: K = None
   
+  def KLinesClosed(self):
+    return list(filter(lambda kline: kline.closed, self.KLines))
+  
   def tryToAction(self):
     KLinesLen = len(self.KLines)
     if self.KLines is None or KLinesLen < 1:
@@ -35,7 +38,7 @@ class KLineWatcher:
     lastKLine = self.KLines[lastIndex]
     if self.wsKLine.time == lastKLine.time:
       self.KLines[lastIndex] = self.wsKLine
-      print('数据生效')
+      print('数据生效', len(self.KLinesClosed()))
       # 数据生效
     elif self.wsKLine.time > lastKLine.time:
       self.updateKLines()
