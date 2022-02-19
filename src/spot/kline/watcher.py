@@ -28,6 +28,14 @@ class KLineWatcher:
   def KLinesClosed(self):
     return list(filter(lambda kline: kline.closed, self.KLines))
   
+  def action(
+    self,
+    closedKLines: List[K],
+    lastKLine: K,
+    allKLines: List[K],
+  ):
+    print('最新价格', lastKLine.close)
+  
   def tryToAction(self):
     KLinesLen = len(self.KLines)
     if self.KLines is None or KLinesLen < 1:
@@ -38,8 +46,7 @@ class KLineWatcher:
     lastKLine = self.KLines[lastIndex]
     if self.wsKLine.time == lastKLine.time:
       self.KLines[lastIndex] = self.wsKLine
-      print('数据生效', len(self.KLinesClosed()))
-      # 数据生效
+      self.action(self.KLinesClosed(), lastKLine, self.KLines)
     elif self.wsKLine.time > lastKLine.time:
       self.updateKLines()
   
