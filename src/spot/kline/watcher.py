@@ -23,39 +23,32 @@ class KLineWatcher:
   wsClient: SpotWebsocketClient
   
   KLines: List[K] = None
-  wsK: K = None
+  wsKLine: K = None
   
-  def doSomething(self):
-    if self.KLines is None or len(self.KLines) < 1:
+  def tryToAction(self):
+    print('尝试行动')
+    KLinesLen = len(self.KLines)
+    if self.KLines is None or KLinesLen < 1:
       return
-    if self.wsK is None:
+    if self.wsKLine is None:
       return
-    lastIndex = len(self.KLines) - 1
-    lastK = self.KLines[lastIndex]
-    if  self.wsK.time == lastK.time:
-      print('ws更新')
-      self.KLines[lastIndex] = self.wsK
-      count = 0
-      for k in self.KLines:
-        if k.closed:
-          count += 1
-      print(count)
-    elif self.wsK.time > lastK.time:
-      print('ws超过')
+    lastIndex = KLinesLen - 1
+    lastKLine = self.KLines[lastIndex]
+    if self.wsKLine.time == lastKLine.time:
+      self.KLines[lastIndex] = self.wsKLine
+      print('数据生效')
+      # 数据生效
+    elif self.wsKLine.time > lastKLine.time:
       self.updateKLines()
-
   
   def wsData(self, data):
     if 'e' in data.keys():
-      # oldK = self.wsK
-      self.wsK = CreateByWS(data['k'])
-      self.doSomething()
-      # if not oldK is None:
-      #   if oldK.time != self.wsK.time:
-      #     self.updateKLines()
+      self.wsKLine = CreateByWS(data['k'])
+      self.tryToAction()
 
   def updateKLines(self):
     self.KLines = CreateKLines(self.client.klines(self.symbol, self.interval, limit = self.limit))
+    self.tryToAction()
 
   def Start(self):
     print('开始监听')
